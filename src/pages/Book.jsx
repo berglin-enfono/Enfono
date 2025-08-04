@@ -24,7 +24,10 @@ const times = [
 ];
 const Book = () => {
   const [selectedTime, setSelectedTime] = useState("6:00 PM");
-  const [date, setDate] = useState("2025-08-04");
+  const [date, setDate] = useState(() => {
+    const today = new Date();
+    return today.toISOString().split("T")[0]; 
+  });
   const [timezone, setTimezone] = useState("");
   const scrollRef = useRef(null);
   const [haveTime, setHaveTime] = useState(false);
@@ -176,17 +179,16 @@ const Book = () => {
             </Box>
             <Stack direction="row" spacing={2} justifyContent="end">
               <Button
-                variant="contained"
+                variant="text"
                 sx={{
-                  bgcolor: "#793e2f",
-                  color: "#fff",
+                  color: "#793e2f",
                   borderRadius: 2,
                   minWidth: 120,
                   textTransform: "none",
                   fontWeight: 500,
-                  boxShadow: 0,
-                  "&:hover": { bgcolor: "#793e2f" },
+                  fontSize: "0.9rem",
                 }}
+                disableRipple
                 onClick={() => {
                   localStorage.removeItem("bookingData");
                   setHaveTime(false);
